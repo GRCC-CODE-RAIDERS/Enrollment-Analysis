@@ -14,15 +14,12 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 What things you need to install the software and how to install them:
 - Python 3.x
-- Pandas library
-- Matplotlib and Seaborn libraries
-- Scikit-Learn library
 
 ### Installing
 A step by step series of examples that tell you how to get a development environment running:
 
 1. Clone the repo: `git clone [URL]`
-2. Install required Python libraries: `pip install pandas matplotlib seaborn scikit-learn`
+2. Install required Python libraries:
 3. Navigate to the project directory and run the Jupyter notebooks or Python scripts.
 
 ## Usage
