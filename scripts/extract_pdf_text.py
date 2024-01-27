@@ -19,6 +19,7 @@ Usage:
 import os
 import PyPDF2
 FOLDER_PATH = 'enrollment_reports'
+OUTPUT_FILE_PATH = 'enrollment_reports/consolidated_report.txt'
 
 def extract_text_from_pdf(pdf_file):
     """
@@ -35,7 +36,7 @@ def extract_text_from_pdf(pdf_file):
         with open(pdf_file, 'rb') as file:
             reader = PyPDF2.PdfReader(file)
             for page_num, page in enumerate(reader.pages):
-                print(f'Extracting from page: {page_num}')
+                print(f'Extracting text from page: {page_num}')
                 page_text = page.extract_text()
                 if page_text:
                     text += page_text
@@ -48,25 +49,28 @@ def extract_text_from_pdf(pdf_file):
 
 def process_pdf_folder():
     """
-    Processes all PDF files in a given folder.
+    Processes all PDF files in a given folder and writes extracted text to a file.
 
     Args:
     folder_path (str): Path to the folder containing PDF files.
+    output_file (str): Path to the output .txt file where the extracted text will be written.
     """
     if not os.path.isdir(FOLDER_PATH):
         print(f"Error: The folder {FOLDER_PATH} does not exist.")
         return
 
-    for filename in os.listdir(FOLDER_PATH):
-        if filename.endswith(".pdf"):
-            pdf_path = os.path.join(FOLDER_PATH, filename)
-            print(f"Extracting text from {filename}...")
-            pdf_text = extract_text_from_pdf(pdf_path)
-            if pdf_text:
-                print(pdf_text)
-            else:
-                print(f"No text extracted from {filename}")
-            print("\n---\n")
+    with open(OUTPUT_FILE_PATH, 'w', encoding='utf-8') as file:
+        for filename in os.listdir(FOLDER_PATH):
+            if filename.endswith(".pdf"):
+                pdf_path = os.path.join(FOLDER_PATH, filename)
+                file.write(f"FILE: {filename}...\n")
+                pdf_text = extract_text_from_pdf(pdf_path)
+                if pdf_text:
+                    file.write(pdf_text)
+                else:
+                    file.write(f"No text extracted from {filename}")
+                file.write("\n---\n")
 
 if __name__ == "__main__":
+    print('Starting to extract text from enrollment reports')
     process_pdf_folder()
